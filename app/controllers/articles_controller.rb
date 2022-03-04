@@ -2,4 +2,41 @@ class ArticlesController < ApplicationController
   def index
     @articles = Article.all
   end
+
+  def show
+    @article = Article.find(params[:id])
+  end
+
+  def new
+    @article = Article.new
+  end
+
+  def create
+    #@article = Article.new(title: "...", body: "...")
+    @article = Article.new(article_params)
+
+    if @article.save
+      # redirects the browser to the article's page at
+      # "http://localhost:3000/articles/#{@article.id}"
+      redirect_to @article
+    else
+      # the action redisplays the form by rendering
+      # app/views/articles/new.html.erb
+      # with status code 422 Unprocessable Entity.
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  private
+    def article_params
+      params.require(:article).permit(:title, :body)
+    end
 end
+
+=begin
+redirect_to will cause the browser to make a new request,
+whereas render renders the specified view for the current request.
+It is important to use redirect_to after mutating the database or application state.
+Otherwise, if the user refreshes the page, the browser will make the same request,
+and the mutation will be repeated.
+=end
