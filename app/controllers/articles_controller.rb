@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
+# Controller to handle HTTP Request for Article CRUD
 class ArticlesController < ApplicationController
-  http_basic_authenticate_with name: "dhh", password: "secret", except: [:index,:show]
+  http_basic_authenticate_with name: 'dhh', password: 'secret', except: %i[index show]
   def index
     @articles = Article.all
   end
@@ -13,7 +16,7 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    #@article = Article.new(title: "...", body: "...")
+    # @article = Article.new(title: "...", body: "...")
     @article = Article.new(article_params)
 
     if @article.save
@@ -51,15 +54,13 @@ class ArticlesController < ApplicationController
 
   private
 
-    def article_params
-      params.require(:article).permit(:title, :body, :status)
-    end
+  def article_params
+    params.require(:article).permit(:title, :body, :status)
+  end
 end
 
-=begin
-redirect_to will cause the browser to make a new request,
-whereas render renders the specified view for the current request.
-It is important to use redirect_to after mutating the database or application state.
-Otherwise, if the user refreshes the page, the browser will make the same request,
-and the mutation will be repeated.
-=end
+# redirect_to will cause the browser to make a new request,
+# whereas render renders the specified view for the current request.
+# It is important to use redirect_to after mutating the database or application state.
+# Otherwise, if the user refreshes the page, the browser will make the same request,
+# and the mutation will be repeated.
