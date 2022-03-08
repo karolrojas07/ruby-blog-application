@@ -1,17 +1,29 @@
-<h1><%= @article.title %></h1>
+<div class="card" style="width: 30rem;">
+  <div class="card-body">
+    <h3 class="card-title"><%= @article.title %></h3>
+    
+    <p class="card-text">
+      Some quick example text to build on the card title and make up the bulk of the card's content.
+    </p>
+    
+      <%= link_to "Edit", edit_article_path(@article), class:"card-link" %>
+      
+      <%= link_to "Destroy", article_path(@article), data: {
+                      turbo_method: :delete,
+                      turbo_confirm: "Are you sure?"
+                    }%>
+      
+    <h5 class="card-subtitle mb-2 text-muted mt-4">Comments</h5>
+    <div>
+      <%= render @article.comments %>
+    </div>
+  </div>
+</div>
 
-<p><%= @article.body %></p>
+<hr>
+<div class="mt-3" style="width: 30rem;">
+  <h3>Add a comment:</h3>
+  <%= render 'comments/form' %>
+</div>
 
-<ul>
-  <li><%= link_to "Edit", edit_article_path(@article) %></li>
-  <li><%= link_to "Destroy", article_path(@article), data: {
-                    turbo_method: :delete,
-                    turbo_confirm: "Are you sure?"
-                  } %></li>
-</ul>
 
-<h2>Comments</h2>
-<%= render @article.comments %>
-
-<h2>Add a comment:</h2>
-<%= render 'comments/form' %>
