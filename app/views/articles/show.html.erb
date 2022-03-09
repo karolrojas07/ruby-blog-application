@@ -1,11 +1,13 @@
 <div class="card" style="width: 30rem;">
   <div class="card-body">
     <h3 class="card-title"><%= @article.title %></h3>
-
+    <h5 class="card-subtitle mb-2 text-muted mt-4">
+      <strong>Author: </strong> <%= @article.user.email%>
+    </h5>
     <p class="card-text">
       <%= @article.body %>
     </p>
-    <% if user_signed_in? %>
+    <% if user_signed_in? && @article.user == current_user %>
     <p>
       <%= link_to "Edit", edit_article_path(@article), class:"card-link" %>
       <%= link_to "Destroy", article_path(@article), data: {
