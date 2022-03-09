@@ -4,13 +4,15 @@
     <strong><%= comment.commenter %> : </strong>
     <br/>
     <%= comment.body %>
-  </p> 
+  </p>
 
+  <% if user_signed_in? %>
   <p>
     <%= link_to "Delete comment", [comment.article, comment], data: {
                   turbo_method: :delete,
                   turbo_confirm: "Are you sure?"
                 } %>
   </p>
+  <% end %>
 </div>
 <% end %>

@@ -1,6 +1,14 @@
 <h1> Articles </h1>
+
+<% if user_signed_in? %>
+  <a style="text-decoration: none !important"
+    class="btn btn-primary" href= <%= new_article_path %>>
+      Add a new Article
+  </a>
+<% end %>
+
 <p class="lead">
-  Our blog has <%= Article.public_count %> articles and counting!
+  This blog has <%= Article.public_count %> articles and counting!
 </p>
 
 <div class="list-group my-3" >
@@ -14,8 +22,3 @@
     <% end %>
   <% end %>
 </div>
-
-<a style="text-decoration: none !important"
-   class="btn btn-primary" href= <%= new_article_path %>>
-    New Article
-</a>

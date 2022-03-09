@@ -3,7 +3,7 @@
 # Controller to handle HTTP Request for Article CRUD
 class ArticlesController < ApplicationController
   # http_basic_authenticate_with name: 'dhh', password: 'secret', except: %i[index show]
-  # before_action :authenticate_user!
+  before_action :authenticate_user!, except: %i[index show]
 
   def index
     @articles = Article.all
