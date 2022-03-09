@@ -1,18 +1,18 @@
 <div class="card" style="width: 30rem;">
   <div class="card-body">
     <h3 class="card-title"><%= @article.title %></h3>
-    
+
     <p class="card-text">
       <%= @article.body %>
     </p>
-    
+
       <%= link_to "Edit", edit_article_path(@article), class:"card-link" %>
-      
+
       <%= link_to "Destroy", article_path(@article), data: {
                       turbo_method: :delete,
                       turbo_confirm: "Are you sure?"
                     }%>
-      
+
     <h5 class="card-subtitle mb-2 text-muted mt-4">Comments</h5>
     <div>
       <%= render @article.comments %>
@@ -25,5 +25,3 @@
   <h3>Add a comment:</h3>
   <%= render 'comments/form' %>
 </div>
-
-
