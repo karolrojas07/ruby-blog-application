@@ -2,7 +2,9 @@
 
 # Controller to handle HTTP Request for Article CRUD
 class ArticlesController < ApplicationController
-  http_basic_authenticate_with name: 'dhh', password: 'secret', except: %i[index show]
+  # http_basic_authenticate_with name: 'dhh', password: 'secret', except: %i[index show]
+  before_action :authenticate_user!, except: %i[index show]
+
   def index
     @articles = Article.all
   end
@@ -16,13 +18,15 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    # @article = Article.new(title: "...", body: "...")
-    @article = Article.new(article_params)
+    if user_signed_in?
+      @user = current_user
+      @article = @user.articles.create(article_params)
+      redirect_to article_path(@article)
 
-    if @article.save
-      # redirects the browser to the article's page at
-      # "http://localhost:3000/articles/#{@article.id}"
-      redirect_to @article
+    # if @article.save
+    # redirects the browser to the article's page at
+    # "http://localhost:3000/articles/#{@article.id}"
+
     else
       # the action redisplays the form by rendering
       # app/views/articles/new.html.erb

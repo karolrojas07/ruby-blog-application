@@ -53,8 +53,11 @@ gem 'bootstrap', '~> 5.1.3'
 # Use jqueruy
 gem 'jquery-rails'
 
-# Use popper 
+# Use popper
 gem 'popper_js', '~> 2.9.3'
+
+# Use Device for Authentication
+gem 'devise'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
