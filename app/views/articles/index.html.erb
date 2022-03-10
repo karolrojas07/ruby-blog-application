@@ -1,8 +1,17 @@
+<% if user_signed_in? %>
+  <p>
+    <strong> Followers: </strong>
+    <%= current_user.followers.count%>
+    <strong> Following: </strong>
+      <%= current_user.following.count%>
+  </p>
+<% end %>
+<hr>
 <h1> Articles </h1>
-
+<hr>
 <% if user_signed_in? %>
   <a style="text-decoration: none !important"
-    class="btn btn-primary" href= <%= new_article_path %>>
+    class="btn btn-primary my-3" href= <%= new_article_path %>>
       Add a new Article
   </a>
 <% end %>

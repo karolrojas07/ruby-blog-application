@@ -1,10 +1,28 @@
 <div class="card" style="width: 30rem;">
   <div class="card-body">
-    <h3 class="card-title"><%= @article.title %></h3>
-    <h5 class="card-subtitle mb-2 text-muted mt-4">
+    <h1 class="card-title"><%= @article.title %></h1>
+    <hr>
+    <h6 class="card-subtitle mb-2 text-muted mt-4">
       <strong>Author: </strong> <%= @article.user.email%>
-    </h5>
-    <p class="card-text">
+    </h6>
+    <% if user_signed_in? && @article.user != current_user%>
+        <% if current_user.following?(@article.user)%>
+          <%= form_for(current_user.active_relationships.find_by(followed_id: @article.user), html: { method: :delete }, remote: true, data_turbo: false) do |f| %>
+            <%= hidden_field_tag :article_id, @article.id %>
+            <%= f.submit "Unfollow", class: "btn-sm btn btn-secondary" %>
+          <% end %>
+        <% else %>
+          <%= form_for(current_user.active_relationships.build, remote: true, data_turbo: false) do |f| %>
+            <div>
+              <%= hidden_field_tag :followed_id, @article.user.id %>
+              <%= hidden_field_tag :article_id, @article.id %>
+            </div>
+            <%= f.submit "Follow", class: "btn-sm btn btn-warning" %>
+          <% end %>
+        <% end %>
+      <% end%>
+    <hr>
+    <p class="card-text my-4">
       <%= @article.body %>
     </p>
     <% if user_signed_in? && @article.user == current_user %>
@@ -28,5 +46,18 @@
 <hr>
 <div class="mt-3" style="width: 30rem;">
   <h3>Add a comment:</h3>
-  <%= render 'comments/form' %>
+  <% if user_signed_in?%>
+    <% if current_user.following?(@article.user) || current_user == @article.user%>
+      <%= render 'comments/form' %>
+    <% else%>
+      <div class="alert alert-warning" role="alert">
+        You must follow the article's author if you want to left a comment
+      </div>
+    <% end%>
+  <% else %>
+    <div class="alert alert-danger" role="alert">
+        You must log in or sign up to left a comment
+      </div>
+  <% end%>
+
 </div>
